@@ -13,23 +13,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('login', 'Auth\LoginController@login')->name('login');
+Route::post('login', 'Auth\LoginController@authenticate')->name('login.confirm');
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::group(['middleware' => 'auth'], function(){
+	Route::get('dashboard', function () {
+	    return view('welcome');
+	})->name('dashboard');
+	
+	Route::get('groups', 'UserGroupsController@index');
+	Route::get('groups/create', 'UserGroupsController@create');
+	Route::post('groups', 'UserGroupsController@store');
+	Route::delete('groups/{id}', 'UserGroupsController@destroy');
+
+	Route::resource('users', 'UsersController');
+	Route::get('users/{id}/sales', 'UserSalesController@index')->name('user.sales');
+	Route::get('users/{id}/purchases', 'UserPurchasesController@index')->name('user.purchases');
+	Route::get('users/{id}/payments', 'UserPaymentsController@index')->name('user.payments');
+	Route::get('users/{id}/receipts', 'UserReceiptsController@index')->name('user.receipts');
+
+	Route::resource('categories', 'CategoriesController', ['except' => ['show']]);
+
+	Route::resource('products', 'ProductsController');
 });
 
-Route::get('groups', 'UserGroupsController@index');
 
-Route::get('groups/create', 'UserGroupsController@create');
-
-Route::post('groups', 'UserGroupsController@store');
-
-Route::delete('groups/{id}', 'UserGroupsController@destroy');
-
-Route::resource('users', 'UsersController');
-
-Route::resource('categories', 'CategoriesController', ['except' => ['show']]);
-
-Route::resource('products', 'ProductsController');
 
 // Route::get('users', 'UsersController@index');
 // Route::get('users/{id}', 'UsersController@show');

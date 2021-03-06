@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
 {
+    public function __construct()
+    {
+        $this->data['tab_menu'] = 'user_info';
+    }
+
     /**
      * Display a listing of the resource.
      *
