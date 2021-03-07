@@ -1,6 +1,17 @@
 @extends('users.user_layout')
 
 @section('user_content')
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 	<!-- DataTales Example -->
     <div class="card shadow mb-4">
         
@@ -22,11 +33,9 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>User</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                        <th>Note</th>
-                        <th class="text-right">Action</th>
+                        <th colspan="2" class="text-right">Total :</th>
+                        <th>{{ $user->payments()->sum('amount') }}</th>
+                        <th colspan="2"></th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -38,10 +47,8 @@
                         <td>{{ $payment->note }}</td>
                         <td class="text-right">
                         	
-                        	<form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="post">
-                        		<a href="{{ route('users.show', ['user' => $user->id]) }}" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-eye"></i> 
-                                </a>
+                        	<form action="{{ route('user.payments.destroy', ['id' => $user->id, 'payment_id' => $payment->id]) }}" method="post">
+                        		
                         		@csrf
                         		@method('DELETE')
                         		<button onclick="return confirm('Are yoou sure?')" type="submit" class="btn btn-danger btn-sm">
@@ -55,5 +62,58 @@
             </table>
         	</div>
        </div>
+    </div>
+
+    <!-- Modal for add new payment -->
+
+    
+
+    <!-- Modal -->
+    <div class="modal fade" id="newPayment" tabindex="-1" role="dialog" aria-labelledby="newPaymentLabel" aria-hidden="true">
+        
+        <div class="modal-dialog" role="document">
+            {!! Form::open(['route' => ['user.payments.store', $user->id], 'method' => 'post']) !!}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newPaymentLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!-- Modal body start -->
+                <div class="modal-body">
+
+<div class="form-group row">
+  <label for="date" class="col-sm-3 text-right col-form-label">Date <span class="text-danger">*</span></label>
+  <div class="col-sm-9">
+      {{ Form::date('date', Null, ['class' => 'form-control', 'id' => 'date', 'placeholder' => 'Date', 'required']) }}
+  </div>
+</div>
+
+<div class="form-group row">
+  <label for="amount" class="col-sm-3 text-right col-form-label">Amount <span class="text-danger">*</span></label>
+  <div class="col-sm-9">
+      {{ Form::text('amount', Null, ['class' => 'form-control', 'id' => 'amount', 'placeholder' => 'Amount', 'required']) }}
+  </div>
+</div>
+
+<div class="form-group row">
+  <label for="note" class="col-sm-3 text-right col-form-label">Note</label>
+  <div class="col-sm-9">
+      {{ Form::textarea('note', Null, ['class' => 'form-control', 'id' => 'note', 'rows' => '3', 'placeholder' => 'Note']) }}
+  </div>
+</div>
+
+                </div>
+                <!-- Modal body end -->
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+            !! Form::close() !!
+        </div>
     </div>
 @stop

@@ -4,14 +4,23 @@
 	<!-- <h2> Users List </h2> -->
 
 	<div class="row clearfix  page_header">
-		<div class="col-md-4">
+		<div class="col-md-2">
 			<a href="{{ route('users.index') }}" class="btn btn-info"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
 		</div>
-		<div class="col-md-8 text-right">
+		<div class="col-md-10 text-right">
 
 		<a href="{{ route('users.create') }}" class="btn btn-info"> <i class="fa fa-plus"></i> New Sale </a>
-		<a href="{{ route('users.create') }}" class="btn btn-info"> <i class="fa fa-plus"></i> New Purchase </a>
-		<a href="{{ route('users.create') }}" class="btn btn-info"> <i class="fa fa-plus"></i> New Payment </a>
+		
+		<!-- Purchase Button trigger Modal -->
+	    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#newPurchase">
+	        <i class="fa fa-plus"></i> New Purchase
+	    </button>
+
+		<!-- Payment Button trigger Modal -->
+	    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#newPayment">
+	        <i class="fa fa-plus"></i> New Payment
+	    </button>
+	    
 		<a href="{{ route('users.create') }}" class="btn btn-info"> <i class="fa fa-plus"></i> New Receipt </a>
 
 		</div>

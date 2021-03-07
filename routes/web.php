@@ -27,23 +27,21 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('groups', 'UserGroupsController@store');
 	Route::delete('groups/{id}', 'UserGroupsController@destroy');
 
+	
+
 	Route::resource('users', 'UsersController');
 	Route::get('users/{id}/sales', 'UserSalesController@index')->name('user.sales');
 	Route::get('users/{id}/purchases', 'UserPurchasesController@index')->name('user.purchases');
+	
 	Route::get('users/{id}/payments', 'UserPaymentsController@index')->name('user.payments');
+	Route::post('users/{id}/payments', 'UserPaymentsController@store')->name('user.payments.store');
+	Route::delete('users/{id}/payments/{payment_id}', 'UserPaymentsController@destroy')->name('user.payments.destroy');
+	
 	Route::get('users/{id}/receipts', 'UserReceiptsController@index')->name('user.receipts');
+
+	
 
 	Route::resource('categories', 'CategoriesController', ['except' => ['show']]);
 
 	Route::resource('products', 'ProductsController');
 });
-
-
-
-// Route::get('users', 'UsersController@index');
-// Route::get('users/{id}', 'UsersController@show');
-// Route::get('users/create', 'UsersController@create');
-// Route::post('users', 'UsersController@store');
-// Route::get('users/{id}/edit', 'UsersController@edit');
-// Route::put('users/{id}', 'UsersController@update');
-// Route::delete('users/{id}', 'UsersController@destroy');
