@@ -21,7 +21,10 @@
 	        <i class="fa fa-plus"></i> New Payment
 	    </button>
 	    
-		<a href="{{ route('users.create') }}" class="btn btn-info"> <i class="fa fa-plus"></i> New Receipt </a>
+	    <!-- Receipt Button trigger Modal -->
+	    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#newReceipt">
+	        <i class="fa fa-plus"></i> New Receipt
+	    </button>
 
 		</div>
 	</div>
@@ -46,4 +49,5 @@
 	  </div>
 	
 	</div>
+	
 @stop

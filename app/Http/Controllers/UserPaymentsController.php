@@ -7,6 +7,7 @@ use App\User;
 use App\Payment;
 use App\Http\Requests\PaymentRequest;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class UserPaymentsController extends Controller
 {
@@ -26,6 +27,7 @@ class UserPaymentsController extends Controller
     {
         $formData = $request->all();
         $formData['user_id'] = $user_id;
+        $formData['admin_id'] = Auth::id();
 
         if(Payment::create($formData)){
             Session::flash('message', 'Payment Added Successfully');

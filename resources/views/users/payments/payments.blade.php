@@ -24,9 +24,9 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>User</th>
+                        <th>Admin</th>
                         <th>Date</th>
-                        <th>Total</th>
+                        <th class="text-right">Total</th>
                         <th>Note</th>
                         <th class="text-right">Action</th>
                     </tr>
@@ -34,16 +34,16 @@
                 <tfoot>
                     <tr>
                         <th colspan="2" class="text-right">Total :</th>
-                        <th>{{ $user->payments()->sum('amount') }}</th>
+                        <th class="text-right">{{ $user->payments()->sum('amount') }}</th>
                         <th colspan="2"></th>
                     </tr>
                 </tfoot>
                 <tbody>
                 	@foreach($user->payments as $payment)
                 	<tr>
-                        <td>{{ $user->name }}</td>
+                        <td>{{ optional($payment->admin)->name }}</td>
                         <td>{{ $payment->date }}</td>
-                        <td>{{ $payment->amount }}</td>
+                        <td class="text-right">{{ $payment->amount }}</td>
                         <td>{{ $payment->note }}</td>
                         <td class="text-right">
                         	
@@ -75,7 +75,7 @@
             {!! Form::open(['route' => ['user.payments.store', $user->id], 'method' => 'post']) !!}
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="newPaymentLabel">Modal title</h5>
+                    <h5 class="modal-title" id="newPaymentLabel">New Payments</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -116,4 +116,5 @@
             !! Form::close() !!
         </div>
     </div>
+    <!-- Modal for Add new payment END -->
 @stop

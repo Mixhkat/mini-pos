@@ -38,6 +38,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::delete('users/{id}/payments/{payment_id}', 'UserPaymentsController@destroy')->name('user.payments.destroy');
 	
 	Route::get('users/{id}/receipts', 'UserReceiptsController@index')->name('user.receipts');
+	Route::post('users/{id}/receipts', 'UserReceiptsController@store')->name('user.receipts.store');
+	Route::delete('users/{id}/receipts/{receipt_id}', 'UserReceiptsController@destroy')->name('user.receipts.destroy');
 
 	
 
